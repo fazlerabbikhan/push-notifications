@@ -17,6 +17,7 @@ import com.fazlerabbikhan.pushnotifications.data.Notification
 import com.fazlerabbikhan.pushnotifications.repository.NotificationRepository
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.squareup.picasso.Picasso
 import kotlin.random.Random
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -29,14 +30,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val notification = remoteMessage.data
         val title = notification["title"]
         val body = notification["body"]
+        val image = notification["image"]
 
-        Log.d("fcm", "$title, $body")
+        Log.d("fcm", "$title, $body, $image")
 
         val newNotification = Notification(title!!, body!!)
         NotificationRepository.addNotification(newNotification)
 
-        val intent = Intent(this, NotificationsActivity::class.java)
+        val imageBitmap = Picasso.get().load(image).get()
 
+        val intent = Intent(this, NotificationsActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -55,6 +58,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setSmallIcon(R.drawable.notification_icon)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
+            .setLargeIcon(imageBitmap)
+            .setStyle(NotificationCompat.BigPictureStyle().bigLargeIcon(null).bigPicture(imageBitmap))
             .build()
 
         notificationManager.notify(notificationID, builder)
