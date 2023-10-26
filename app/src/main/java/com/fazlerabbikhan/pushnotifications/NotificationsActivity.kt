@@ -31,6 +31,16 @@ class NotificationsActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        val sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+
+        if (!isLoggedIn) {
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.putExtra("fromNotification", true)
+            startActivity(intent)
+            finish()
+        }
+
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = getString(R.string.notifications)
 

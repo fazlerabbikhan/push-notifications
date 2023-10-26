@@ -22,16 +22,25 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         val sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+
+        // Check if the activity was started from a notification
+        val fromNotification = intent.getBooleanExtra("fromNotification", false)
+
         if (isLoggedIn) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            if (fromNotification) {
+                val intent = Intent(this, NotificationsActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
 
         binding.btnLogin.setOnClickListener {
-            loginUser()
+            loginUser(fromNotification)
         }
 
         binding.tvSignUp.setOnClickListener {
@@ -39,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun loginUser() {
+    private fun loginUser(fromNotification: Boolean) {
         val email = binding.etUsername.text.toString()
         val password = binding.etPassword.text.toString()
 
@@ -48,9 +57,14 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
-                        // Login successful, you can navigate to the main screen or perform other actions
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
+                        // Handle navigation based on the fromNotification flag
+                        if (fromNotification) {
+                            val intent = Intent(this, NotificationsActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        }
                         finish()
 
                         storeAuthState()

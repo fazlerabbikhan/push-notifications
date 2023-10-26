@@ -23,7 +23,6 @@
         <activity
             android:name=".NotificationsActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="OPEN_ACTIVITY_NOTIFICATION" />
                 <category android:name="android.intent.category.DEFAULT" />
