@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1089737510523",
+    "project_id": "push-notifications-era",
+    "storage_bucket": "push-notifications-era.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089737510523:android:c83075c5c818c2afcd5cde",
+        "android_client_info": {
+          "package_name": "com.fazlerabbikhan.pushnotifications"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1089737510523-fboui1rk5kqhkriq7k4pnlq5ob6lup5c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4apqV0rgw7lyXNdY75FPqK0i0-Dl0Hu8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1089737510523-fboui1rk5kqhkriq7k4pnlq5ob6lup5c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

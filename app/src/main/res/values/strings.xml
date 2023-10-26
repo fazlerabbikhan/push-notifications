@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">PushNotifications</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="new_user">New user?</string>
+    <string name="signup">Sign Up</string>
+    <string name="enter_name">Enter name</string>
+    <string name="enter_email">Enter email</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_password">Enter password</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="notifications">Notifications</string>
+    <string name="title">Notification Title</string>
+    <string name="body">Notification Body</string>
+    <string name="msg_token_fmt">FCM Registration Token: %1$s</string>
+</resources>
