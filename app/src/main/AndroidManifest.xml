@@ -19,16 +19,8 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/notification_icon" />
-
-        <activity
-            android:name=".NotificationsActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="OPEN_ACTIVITY_NOTIFICATION" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:resource="@drawable/notification_icon">
+        </meta-data>
 
         <service
             android:name=".service.MyFirebaseMessagingService"
@@ -36,6 +28,11 @@
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
+        </service>
+
+        <service
+            android:name=".service.LocalNotificationService"
+            android:exported="true">
         </service>
 
         <activity
@@ -51,6 +48,21 @@
             android:name=".MainActivity"
             android:exported="true">
         </activity>
+
+        <activity
+            android:name=".NotificationsActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_NOTIFICATION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="false">
+        </activity>
+
     </application>
 
 </manifest>

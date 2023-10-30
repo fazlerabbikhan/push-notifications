@@ -10,6 +10,12 @@
     <string name="enter_password">Enter password</string>
     <string name="dashboard">Dashboard</string>
     <string name="notifications">Notifications</string>
+    <string name="payment">Payment</string>
+    <string name="make_payment">Make Payment</string>
+    <string name="ft">FT</string>
+    <string name="npsb">NPSB</string>
+    <string name="eft">EFT</string>
+    <string name="rtgs">RTGS</string>
     <string name="title">Notification Title</string>
     <string name="body">Notification Body</string>
     <string name="msg_token_fmt">FCM Registration Token: %1$s</string>

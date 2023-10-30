@@ -7,6 +7,8 @@ import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -29,23 +31,33 @@ import kotlin.random.Random
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    private val CHANNEL_ID = "my_notification_channel"
+    private val CHANNEL_ID = "fcm_notifications"
+    private val CHANNEL_NAME = "fcm_channel"
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
         val notification = remoteMessage.data
-        val title = notification["title"]
-        val body = notification["body"]
-        val image = notification["image"]
+        val title = notification["title"] ?: "Title"
+        val body = notification["body"] ?: "Body"
+        val image = notification["image"] ?: ""
 
         Log.d("fcm", "$title, $body, $image")
 
-        val newNotification = Notification(title!!, body!!)
+        val newNotification = Notification(title, body)
         NotificationRepository.addNotification(newNotification)
 
-        val imageBitmap = Picasso.get().load(image).get()
+        try {
+            val imageBitmap = Picasso.get().load(image).get()
+            showNotification(title, body, imageBitmap)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            val placeholderBitmap = BitmapFactory.decodeResource(resources, R.drawable.bank_asia)
+            showNotification(title, body, placeholderBitmap)
+        }
+    }
 
+    private fun showNotification(title: String, body: String, bitmap: Bitmap) {
         val intent = Intent(this, NotificationsActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
@@ -65,8 +77,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setSmallIcon(R.drawable.notification_icon)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
-            .setLargeIcon(imageBitmap)
-            .setStyle(NotificationCompat.BigPictureStyle().bigLargeIcon(null).bigPicture(imageBitmap))
+            .setLargeIcon(bitmap)
+            .setStyle(NotificationCompat.BigPictureStyle().bigLargeIcon(null).bigPicture(bitmap))
             .build()
 
         notificationManager.notify(notificationID, builder)
@@ -74,8 +86,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(notificationManager: NotificationManager) {
-        val channelName = "channelName"
-        val channel = NotificationChannel(CHANNEL_ID, channelName, IMPORTANCE_HIGH)
+        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, IMPORTANCE_HIGH)
         notificationManager.createNotificationChannel(channel)
     }
 

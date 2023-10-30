@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import com.fazlerabbikhan.pushnotifications.databinding.ActivityMainBinding
 import com.google.android.gms.tasks.OnCompleteListener
@@ -15,6 +16,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var btnLogout: Button
     private lateinit var auth: FirebaseAuth
     private val PREFS_NAME = "MyAppPrefs"
 
@@ -24,12 +26,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        btnLogout = findViewById(R.id.btnLogout)
+
         auth = FirebaseAuth.getInstance()
 
-        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.title = getString(R.string.dashboard)
 
-        binding.btnLogout.setOnClickListener {
+        btnLogout.setOnClickListener {
             // Sign out the user when the logout button is clicked
             auth.signOut()
 
@@ -45,6 +49,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnNotifications.setOnClickListener {
             val intent = Intent(this, NotificationsActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnPayment.setOnClickListener {
+            val intent = Intent(this, PaymentActivity::class.java)
             startActivity(intent)
         }
 

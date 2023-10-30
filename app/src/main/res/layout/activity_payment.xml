@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity">
+    tools:context=".PaymentActivity">
 
     <include layout="@layout/toolbar"/>
 
@@ -19,17 +19,31 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btnNotifications"
+                android:id="@+id/btnFT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/notifications"/>
+                android:text="@string/ft"/>
 
             <Button
-                android:id="@+id/btnPayment"
+                android:id="@+id/btnNPSB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/payment"/>
+                android:text="@string/npsb"/>
+
+            <Button
+                android:id="@+id/btnEFT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/eft"/>
+
+            <Button
+                android:id="@+id/btnRTGS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/rtgs"/>
 
         </LinearLayout>
 

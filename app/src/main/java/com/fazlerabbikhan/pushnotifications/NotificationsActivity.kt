@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 class NotificationsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNotificationsBinding
+    private lateinit var btnLogout: Button
     private lateinit var auth: FirebaseAuth
     private lateinit var notificationRecyclerView: RecyclerView
     private val PREFS_NAME = "MyAppPrefs"
@@ -28,6 +30,8 @@ class NotificationsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        btnLogout = findViewById(R.id.btnLogout)
 
         auth = FirebaseAuth.getInstance()
 
@@ -41,7 +45,7 @@ class NotificationsActivity : AppCompatActivity() {
             finish()
         }
 
-        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.title = getString(R.string.notifications)
 
         notificationRecyclerView = findViewById(R.id.notificationRecyclerView)
@@ -50,12 +54,12 @@ class NotificationsActivity : AppCompatActivity() {
         if (intent.extras != null) {
             bundle = intent.extras!!
 
-            val title = bundle.getString("title")
-            val body = bundle.getString("body")
+            val title = bundle.getString("title") ?: "Title"
+            val body = bundle.getString("body") ?: "Body"
 
             Log.d("IntentExtras", "$title, $body")
 
-            val newNotification = Notification(title!!, body!!)
+            val newNotification = Notification(title, body)
             NotificationRepository.addNotification(newNotification)
         }
 
@@ -65,7 +69,7 @@ class NotificationsActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
         Log.d("notifications", "$notifications")
 
-        binding.btnLogout.setOnClickListener {
+        btnLogout.setOnClickListener {
             // Sign out the user when the logout button is clicked
             auth.signOut()
 

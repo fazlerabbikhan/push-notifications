@@ -39,6 +39,9 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        binding.etUsername.setText("admin@era.com")
+        binding.etPassword.setText("admin@123")
+
         binding.btnLogin.setOnClickListener {
             loginUser(fromNotification)
         }
